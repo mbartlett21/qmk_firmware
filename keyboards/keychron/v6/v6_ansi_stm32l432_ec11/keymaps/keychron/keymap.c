@@ -26,6 +26,19 @@ enum layers{
   WIN_FN
 };
 
+/*
+        Esc       F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12         Knob        PrtSc     Mic       Lights    Circle    Tri       Square    Cross
+
+        `         1         2         3         4         5         6         7         8         9         0         -         =           Bksp        Ins       Home      Pgup      Num       /         *         -
+
+        Tab       Q         W         E         R         T         Y         U         I         O         P         [         ]           \           Del       End       Pgdn      7         8         9         +
+
+        Caps      A         S         D         F         G         H         J         K         L         ;         '                     Enter                                     4         5         6
+
+        Shift               Z         X         C         V         B         N         M         ,         .         /                     Shift                 Up                  1         2         3         Enter
+
+        Ctrl      Gui       Alt                                     Space                                   Alt       Gui       Fn          Ctrl        Left      Down      Rght      0                   .
+*/
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_ansi_109(
         KC_ESC,   KC_BRID,  KC_BRIU,  KC_MCTL,  KC_LPAD,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,    KC_MUTE,    KC_SNAP,  KC_SIRI,  RGB_MOD,  KC_F13,   KC_F14,   KC_F15,   KC_F16,
