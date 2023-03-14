@@ -111,19 +111,27 @@ static uint8_t light_brightness_get(void) {
 static uint8_t CAPS_WORD_ACTIVE = 0;
 
 bool rgb_matrix_indicators_user() {
-    if (CAPS_WORD_ACTIVE) {
-        int i = 31;
+    uint8_t is_caps = host_keyboard_led_state().caps_lock;
+    if (CAPS_WORD_ACTIVE || is_caps) {
+        int i;
         uint8_t v = light_brightness_get();
 
-        rgb_matrix_set_color(i, v, v, v);
-        for (i = 42; i < 52; i ++)
-            rgb_matrix_set_color(i, v, v, v);
+        // caps lock doesn't do underscore
+        if (CAPS_WORD_ACTIVE)
+            // _
+            rgb_matrix_set_color(31, v, v, v);
 
+        // // qwertyuiop
+        // for (i = 42; i < 52; i ++)
+        //     rgb_matrix_set_color(i, v, v, v);
+
+        // asdfghjkl
         for (i = 63; i < 72; i ++)
             rgb_matrix_set_color(i, v, v, v);
 
-        for (i = 79; i < 86; i ++)
-            rgb_matrix_set_color(i, v, v, v);
+        // // zxcvbnm
+        // for (i = 79; i < 86; i ++)
+        //     rgb_matrix_set_color(i, v, v, v);
     }
     return true;
 }
