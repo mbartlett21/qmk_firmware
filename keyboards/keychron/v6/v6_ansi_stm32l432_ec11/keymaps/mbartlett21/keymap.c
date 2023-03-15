@@ -28,6 +28,12 @@ enum layers{
 #define KC_TASK LGUI(KC_TAB)
 #define KC_FLXP LGUI(KC_E)
 
+const uint16_t PROGMEM caps_word_combo[] = {KC_LSFT, KC_CAPS, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(caps_word_combo, CW_TOGG),
+};
+
 /*
         Esc       F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12         Knob        PrtSc     Mic       Lights    Circle    Tri       Square    Cross
 
