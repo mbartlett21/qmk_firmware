@@ -110,38 +110,56 @@ static uint8_t light_brightness_get(void) {
 
 static uint8_t CAPS_WORD_ACTIVE = 0;
 
+static uint8_t CURR_POS = 0;
+
+#define POS_AMT 5
+
 bool rgb_matrix_indicators_user() {
     uint8_t is_caps = host_keyboard_led_state().caps_lock;
-    if (CAPS_WORD_ACTIVE || is_caps) {
-        int i;
-        uint8_t v = light_brightness_get();
 
-        // caps lock doesn't do underscore
-        if (CAPS_WORD_ACTIVE)
-            // _
-            rgb_matrix_set_color(31, v, v, v);
+    uint8_t target = (CAPS_WORD_ACTIVE ? 31 : (is_caps ? 30 : 0)) * POS_AMT;
 
-        // // qwertyuiop
-        // for (i = 42; i < 52; i ++)
-        //     rgb_matrix_set_color(i, v, v, v);
+    if (CURR_POS < target)
+        CURR_POS ++;
+    else if (CURR_POS > target)
+        CURR_POS --;
 
-        // asdfghjkl
-        for (i = 63; i < 72; i ++)
-            rgb_matrix_set_color(i, v, v, v);
+    uint8_t pos = CURR_POS / POS_AMT;
 
-        // // zxcvbnm
-        // for (i = 79; i < 86; i ++)
-        //     rgb_matrix_set_color(i, v, v, v);
-    }
+    // uint8_t pos_top = pos / 3;
+    // uint8_t pos_mid = pos == 0 ? 0 : (pos - 1) / 3;
+    // uint8_t pos_bot = pos <= 1 ? 0 : (pos - 2) / 3;
+    uint8_t pos_top = pos;
+    uint8_t pos_mid = pos <= 10 ? 0 : pos - 10;
+    uint8_t pos_bot = pos <= 19 ? 0 : pos - 19;
+
+    uint8_t underscore = pos >= 31;
+
+    int i;
+    uint8_t v = light_brightness_get();
+
+    // caps lock doesn't do underscore
+    if (underscore)
+        // _
+        rgb_matrix_set_color(31, v, v, v);
+
+    // qwertyuiop
+    for (i = 42; i < 42 + (pos_top > 10 ? 10 : pos_top); i ++)
+        rgb_matrix_set_color(i, v, v, v);
+
+    // asdfghjkl
+    for (i = 63; i < 63 + (pos_mid > 9 ? 9 : pos_mid); i ++)
+        rgb_matrix_set_color(i, v, v, v);
+
+    // zxcvbnm
+    for (i = 79; i < 79 + (pos_bot > 7 ? 7 : pos_bot); i ++)
+        rgb_matrix_set_color(i, v, v, v);
     return true;
 }
 
 void caps_word_set_user(bool active) {
-    if (active) {
+    if (active)
         CAPS_WORD_ACTIVE = 1;
-        // Do something when Caps Word activates.
-    } else {
-        // Do something when Caps Word deactivates.
+    else
         CAPS_WORD_ACTIVE = 0;
-    }
 }
