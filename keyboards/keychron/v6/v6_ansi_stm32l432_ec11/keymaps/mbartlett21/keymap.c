@@ -108,16 +108,15 @@ static uint8_t light_brightness_get(void) {
     return value;
 }
 
-static uint8_t CAPS_WORD_ACTIVE = 0;
-
 static uint8_t CURR_POS = 0;
 
 #define POS_AMT 5
 
 bool rgb_matrix_indicators_user() {
     uint8_t is_caps = host_keyboard_led_state().caps_lock;
+    uint8_t is_cw = is_caps_word_on();
 
-    uint8_t target = (CAPS_WORD_ACTIVE ? 31 : (is_caps ? 30 : 0)) * POS_AMT;
+    uint8_t target = (is_cw ? 31 : (is_caps ? 30 : 0)) * POS_AMT;
 
     if (CURR_POS < target)
         CURR_POS ++;
@@ -155,11 +154,4 @@ bool rgb_matrix_indicators_user() {
     for (i = 79; i < 79 + (pos_bot > 7 ? 7 : pos_bot); i ++)
         rgb_matrix_set_color(i, v, v, v);
     return true;
-}
-
-void caps_word_set_user(bool active) {
-    if (active)
-        CAPS_WORD_ACTIVE = 1;
-    else
-        CAPS_WORD_ACTIVE = 0;
 }
