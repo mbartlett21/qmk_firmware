@@ -22,7 +22,8 @@ enum layers{
   MAC_BASE,
   MAC_FN,
   WIN_BASE,
-  WIN_FN
+  WIN_FN,
+  WIN_NUM,
 };
 
 #define KC_TASK LGUI(KC_TAB)
@@ -75,7 +76,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,
         _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                  _______,  _______,  _______,
         _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,              _______,            _______,  _______,  _______,  _______,
-        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,    _______,  _______,  _______,  _______,            _______),
+        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  TO(WIN_NUM),  _______,  _______,  _______,  _______,            _______),
+    [WIN_NUM] = LAYOUT_ansi_109(
+        XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    KC_MUTE,    XXXXXXX,  XXXXXXX,  XXXXXXX,  _______,  _______,  _______,  _______,
+        KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,    XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,
+        KC_P7,    KC_P8,    KC_P9,    KC_PPLS,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,    XXXXXXX,    XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_P7,    KC_P8,    KC_P9,    KC_PPLS,
+        KC_P4,    KC_P5,    KC_P6,    KC_PPLS,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,              XXXXXXX,                                  KC_P4,    KC_P5,    KC_P6,
+        KC_P1,              KC_P2,    KC_P3,    KC_PENT,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,              XXXXXXX,              XXXXXXX,            KC_P1,    KC_P2,    KC_P3,    KC_PENT,
+        KC_P0,    KC_P0,    KC_PDOT,                                KC_PENT,                                XXXXXXX,  XXXXXXX,  XXXXXXX,  TG(WIN_NUM),  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_P0,              KC_PDOT),
 };
 
 #if defined(ENCODER_MAP_ENABLE)
@@ -83,7 +91,8 @@ const uint16_t PROGMEM encoder_map[][1][2] = {
     [MAC_BASE] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [MAC_FN]   = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
     [WIN_BASE] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [WIN_FN]   = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) }
+    [WIN_FN]   = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
+    [WIN_NUM]  = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
 };
 #endif // ENCODER_MAP_ENABLE
 
