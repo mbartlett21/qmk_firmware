@@ -127,46 +127,72 @@ static uint8_t CURR_POS = 0;
 
 #define POS_AMT 5
 
-bool rgb_matrix_indicators_user() {
-    uint8_t is_caps = host_keyboard_led_state().caps_lock;
-    uint8_t is_cw = is_caps_word_on();
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (get_highest_layer(layer_state) > 2) {
+        uint8_t layer = get_highest_layer(layer_state);
 
-    uint8_t target = (is_cw ? 31 : (is_caps ? 30 : 0)) * POS_AMT;
+        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                uint8_t index = g_led_config.matrix_co[row][col];
 
-    if (CURR_POS < target)
-        CURR_POS ++;
-    else if (CURR_POS > target)
-        CURR_POS --;
+                if (index >= led_min && index < led_max && index != NO_LED &&
+                        keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
+                    rgb_matrix_set_color(index, RGB_GREEN);
+                }
+            }
+        }
+    } else {
+        uint8_t is_caps = host_keyboard_led_state().caps_lock;
+        uint8_t is_cw = is_caps_word_on();
 
-    uint8_t pos = CURR_POS / POS_AMT;
+        uint8_t target = (is_cw ? 31 : (is_caps ? 30 : 0)) * POS_AMT;
 
-    // uint8_t pos_top = pos / 3;
-    // uint8_t pos_mid = pos == 0 ? 0 : (pos - 1) / 3;
-    // uint8_t pos_bot = pos <= 1 ? 0 : (pos - 2) / 3;
-    uint8_t pos_top = pos;
-    uint8_t pos_mid = pos <= 10 ? 0 : pos - 10;
-    uint8_t pos_bot = pos <= 19 ? 0 : pos - 19;
+        if (CURR_POS < target)
+            CURR_POS ++;
+        else if (CURR_POS > target)
+            CURR_POS --;
 
-    uint8_t underscore = pos >= 31;
+        uint8_t pos = CURR_POS / POS_AMT;
 
-    int i;
-    uint8_t v = light_brightness_get();
+        uint8_t pos_top = pos / 3;
+        uint8_t pos_mid = pos == 0 ? 0 : (pos - 1) / 3;
+        uint8_t pos_bot = pos <= 1 ? 0 : (pos - 2) / 3;
+        // uint8_t pos_top = pos;
+        // uint8_t pos_mid = pos <= 10 ? 0 : pos - 10;
+        // uint8_t pos_bot = pos <= 19 ? 0 : pos - 19;
 
-    // caps lock doesn't do underscore
-    if (underscore)
-        // _
-        rgb_matrix_set_color(31, v, v, v);
+        int i;
+        uint8_t v = light_brightness_get();
 
-    // qwertyuiop
-    for (i = 42; i < 42 + (pos_top > 10 ? 10 : pos_top); i ++)
-        rgb_matrix_set_color(i, v, v, v);
 
-    // asdfghjkl
-    for (i = 63; i < 63 + (pos_mid > 9 ? 9 : pos_mid); i ++)
-        rgb_matrix_set_color(i, v, v, v);
+        if (is_cw) {
+            // _
+            rgb_matrix_set_color(31, v, v, v);
 
-    // zxcvbnm
-    for (i = 79; i < 79 + (pos_bot > 7 ? 7 : pos_bot); i ++)
-        rgb_matrix_set_color(i, v, v, v);
-    return true;
+            // qwertyuiop
+            for (i = 51; i > 51 - (pos_top > 10 ? 10 : pos_top); i --)
+                rgb_matrix_set_color(i, v, v, v);
+
+            // asdfghjkl
+            for (i = 71; i > 71 - (pos_mid > 9 ? 9 : pos_mid); i --)
+                rgb_matrix_set_color(i, v, v, v);
+
+            // zxcvbnm
+            for (i = 85; i > 85 - (pos_bot > 7 ? 7 : pos_bot); i --)
+                rgb_matrix_set_color(i, v, v, v);
+        } else {
+            // qwertyuiop
+            for (i = 42; i < 42 + (pos_top > 10 ? 10 : pos_top); i ++)
+                rgb_matrix_set_color(i, v, v, v);
+
+            // asdfghjkl
+            for (i = 63; i < 63 + (pos_mid > 9 ? 9 : pos_mid); i ++)
+                rgb_matrix_set_color(i, v, v, v);
+
+            // zxcvbnm
+            for (i = 79; i < 79 + (pos_bot > 7 ? 7 : pos_bot); i ++)
+                rgb_matrix_set_color(i, v, v, v);
+        }
+    }
+    return false;
 }
