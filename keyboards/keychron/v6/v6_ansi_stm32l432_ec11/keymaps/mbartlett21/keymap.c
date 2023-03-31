@@ -20,6 +20,7 @@
 
 enum layers{
   BASE,
+  DVORAK,
   FN,
   NUM,
 };
@@ -54,6 +55,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,                                 KC_P4,    KC_P5,    KC_P6,
         KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,            KC_UP,              KC_P1,    KC_P2,    KC_P3,    KC_PENT,
         KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(FN),   KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT),
+    [DVORAK] = LAYOUT_ansi_109(
+        KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   KC_MUTE,  KC_PSCR,  KC_PAUS,  RGB_MOD,  _______,  _______,  _______,  _______,
+        KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_LBRC,  KC_RBRC,  KC_BSPC,  KC_INS,   KC_HOME,  KC_PGUP,  KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,
+        KC_TAB,   KC_SCLN,  KC_COMM,  KC_DOT,   KC_P,     KC_Y,     KC_F,     KC_G,     KC_C,     KC_R,     KC_L,     KC_SLSH,  KC_EQL,   KC_BSLS,  KC_DEL,   KC_END,   KC_PGDN,  KC_P7,    KC_P8,    KC_P9,    KC_PPLS,
+        KC_CAPS,  KC_A,     KC_O,     KC_E,     KC_U,     KC_I,     KC_D,     KC_H,     KC_T,     KC_N,     KC_S,     KC_MINS,            KC_ENT,                                 KC_P4,    KC_P5,    KC_P6,
+        KC_LSFT,            KC_QUOT,  KC_Q,     KC_J,     KC_K,     KC_X,     KC_B,     KC_M,     KC_W,     KC_V,     KC_Z,               KC_RSFT,            KC_UP,              KC_P1,    KC_P2,    KC_P3,    KC_PENT,
+        KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(FN),   KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT),
     [FN] = LAYOUT_ansi_109(
         _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  RGB_TOG,  _______,  _______,  KC_SCRL,  _______,  _______,  _______,  _______,
         QK_RBT,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_CALC,  _______,  _______,  _______,
@@ -73,6 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][1][2] = {
     [BASE]   = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [DVORAK] = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [FN]     = {ENCODER_CCW_CW(RGB_VAD, RGB_VAI) },
     [NUM]    = {ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
 };
@@ -110,7 +119,7 @@ static uint8_t CURR_POS = 0;
 #define POS_AMT 5
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (get_highest_layer(layer_state) > 0) {
+    if (get_highest_layer(layer_state) > 1) {
         uint8_t layer = get_highest_layer(layer_state);
 
         for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
@@ -181,8 +190,10 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 
 bool dip_switch_update_user(uint8_t index, bool active) {
     if (index == 0) {
-        // Make sure it is only set to layer 0
-        default_layer_set(1);
+        // active == set to windows
+        // layer 0: windows
+        // layer 1: dvorak
+        default_layer_set(1UL << (active ? 0 : 1));
         return false; // Prevent the next level from changing it
     }
     return true;
