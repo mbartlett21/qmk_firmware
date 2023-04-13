@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
         TG(MOUSE_L),RGB_RMOD,RGB_VAD, RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  DM_PLY1,  DM_PLY2,  _______,            _______,                                _______,  _______,  _______,
         _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,            _______,            _______,  _______,  _______,  _______,
-        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  TO(NUM),  _______,  _______,  _______,  _______,            _______),
+        _______,  _______,  _______,                                _______,                                _______,TG(MOUSE_L),_______,  TO(NUM),  _______,  _______,  _______,  _______,            _______),
     [NUM] = LAYOUT_ansi_109(
         XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MUTE,  XXXXXXX,  XXXXXXX,  XXXXXXX,  _______,  _______,  _______,  _______,
         KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,
