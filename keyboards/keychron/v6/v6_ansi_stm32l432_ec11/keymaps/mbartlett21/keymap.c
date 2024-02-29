@@ -31,6 +31,10 @@ enum custom_keycodes {
     ISS_APP,
     KEY_MJB,
     PAST_TB,
+    DEGREE,
+    EN_DASH,
+    EM_DASH,
+    MICRO,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -53,6 +57,50 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case PAST_TB:
         if (record->event.pressed) {
             SEND_STRING(SS_LCTL("v") "\t");
+        }
+        break;
+    case DEGREE:
+        // Alt + 0176
+        if (record->event.pressed) {
+            register_code(KC_RALT);
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P7);
+            tap_code(KC_P6);
+            unregister_code(KC_RALT);
+        }
+        break;
+    case EN_DASH:
+        // Alt + 0150
+        if (record->event.pressed) {
+            register_code(KC_RALT);
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P5);
+            tap_code(KC_P0);
+            unregister_code(KC_RALT);
+        }
+        break;
+    case EM_DASH:
+        // Alt + 0151
+        if (record->event.pressed) {
+            register_code(KC_RALT);
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P5);
+            tap_code(KC_P1);
+            unregister_code(KC_RALT);
+        }
+        break;
+    case MICRO:
+        // Alt + 0181
+        if (record->event.pressed) {
+            register_code(KC_RALT);
+            tap_code(KC_P0);
+            tap_code(KC_P1);
+            tap_code(KC_P8);
+            tap_code(KC_P1);
+            unregister_code(KC_RALT);
         }
         break;
     }
@@ -99,10 +147,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(FN),   KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT),
     [FN] = LAYOUT_ansi_109(
         _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  RGB_TOG,  _______,  QK_LOCK,  KC_SCRL,  _______,  _______,  _______,  _______,
-        QK_RBT,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_CALC,  _______,  _______,  _______,
-        RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_APP,   _______,  KC_MSEL,  _______,  _______,  _______,  _______,
+        QK_RBT,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_CALC,  _______,  DEGREE,   _______,
+        RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  MICRO,    _______,  _______,  _______,  _______,  _______,  _______,  KC_APP,   _______,  KC_MSEL,  _______,  _______,  _______,  _______,
         TG(MOUSE_L),RGB_RMOD,RGB_VAD, RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  DM_PLY1,  DM_PLY2,  _______,            _______,                                ISS_MAN,  PAST_TB,  KEY_MJB,
-        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,            _______,            ISS_APP,  _______,  _______,  _______,
+        _______,            NK_TOGG,  _______,  _______,  _______,  _______,  EN_DASH,  EM_DASH,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,            _______,            ISS_APP,  _______,  _______,  _______,
         _______,  _______,  _______,                                _______,                                _______,TG(MOUSE_L),_______,  TO(NUM),  _______,  _______,  _______,  _______,            _______),
     [NUM] = LAYOUT_ansi_109(
         XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MUTE,  XXXXXXX,  XXXXXXX,  XXXXXXX,  _______,  _______,  _______,  _______,
