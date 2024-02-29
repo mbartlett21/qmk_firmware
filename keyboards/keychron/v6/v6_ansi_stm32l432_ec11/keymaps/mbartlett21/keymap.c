@@ -215,10 +215,16 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
         for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
             for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
                 uint8_t index = g_led_config.matrix_co[row][col];
+                uint16_t kc = 0;
 
                 if (index >= led_min && index < led_max && index != NO_LED &&
-                        keymap_key_to_keycode(layer, (keypos_t){col,row}) > KC_TRNS) {
-                    rgb_matrix_set_color(index, RGB_GREEN);
+                        (kc = keymap_key_to_keycode(layer, (keypos_t){col,row})) > KC_TRNS) {
+                    if (kc >= ISS_MAN)
+                        rgb_matrix_set_color(index, RGB_WHITE);
+                    else if (kc > 0xFF)
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                    else
+                        rgb_matrix_set_color(index, RGB_RED);
                 }
             }
         }
