@@ -111,7 +111,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #define KC_FLXP LGUI(KC_E)
 #define KC_MCAP LT(MOUSE_L,KC_CAPS)
 
-const uint16_t PROGMEM caps_word_combo[] = {KC_LSFT, KC_CAPS, COMBO_END};
+const uint16_t PROGMEM caps_word_combo[] = {KC_LSFT, KC_MCAP, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(caps_word_combo, CW_TOGG),
