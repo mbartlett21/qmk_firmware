@@ -1,4 +1,4 @@
-/* Copyright 2023 @ lokher (https://www.keychron.com)
+/* Copyright 2023 @ Keychron (https://www.keychron.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,29 +14,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#include "config.h"
+uint32_t sqrt_uint32(uint32_t n) {
+    uint32_t x = n;
+    uint32_t y = (x + 1) / 2;
 
-#ifndef DEFAULT_PROCESS_TIME
-#    define DEFAULT_PROCESS_TIME 3000
-#endif
+    while (y < x) {
+        x = y;
+        y = (x + n / x) / 2;
+    }
 
-#ifndef CONNECTED_PROCESS_TIME
-#    define CONNECTED_PROCESS_TIME  (30*60*1000)
-#endif
-
-typedef enum {
-    PM_RUN,
-    PM_SLEEP,
-    PM_STOP,
-    PM_STANDBY,
-} pm_t;
-
-void lpm_init(void);
-void lpm_timer_reset(void);
-void lpm_timer_stop(void);
-bool usb_power_connected(void);
-bool lpm_is_kb_idle(void);
-void matrix_lpm(void);
-void enter_power_mode(pm_t mode);
-void lpm_task(void);
+    return x;
+}

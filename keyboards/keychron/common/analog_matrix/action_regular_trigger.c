@@ -1,4 +1,4 @@
-/* Copyright 2023 @ lokher (https://www.keychron.com)
+/* Copyright 2024 @ Keychron (https://www.keychron.com)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,29 +14,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
-#include "config.h"
+#include "analog_matrix.h"
 
-#ifndef DEFAULT_PROCESS_TIME
-#    define DEFAULT_PROCESS_TIME 3000
-#endif
+bool regular_trigger_action(analog_key_t *key) {
+    if (key->state == AKS_REGULAR_PRESSED && (key->travel == 0 || key->travel < key->regular.deactn_pt)) {
+        key->state = AKS_REGULAR_RELEASED;
+        return true;
+    } else if (key->state == AKS_REGULAR_RELEASED && key->travel >= key->regular.actn_pt) {
+        key->state = AKS_REGULAR_PRESSED;
+        return true;
+    }
 
-#ifndef CONNECTED_PROCESS_TIME
-#    define CONNECTED_PROCESS_TIME  (30*60*1000)
-#endif
-
-typedef enum {
-    PM_RUN,
-    PM_SLEEP,
-    PM_STOP,
-    PM_STANDBY,
-} pm_t;
-
-void lpm_init(void);
-void lpm_timer_reset(void);
-void lpm_timer_stop(void);
-bool usb_power_connected(void);
-bool lpm_is_kb_idle(void);
-void matrix_lpm(void);
-void enter_power_mode(pm_t mode);
-void lpm_task(void);
+    return false;
+}
