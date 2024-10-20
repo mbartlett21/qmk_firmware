@@ -35,7 +35,7 @@
 #endif
 
 #ifndef POWER_ON_LED_DURATION
-#define POWER_ON_LED_DURATION 3000
+#    define POWER_ON_LED_DURATION 3000
 #endif
 
 static uint32_t power_on_indicator_timer;
@@ -56,7 +56,7 @@ void keyboard_post_init_kb(void) {
 #ifdef LK_WIRELESS_ENABLE
     setPinInput(P2P4_MODE_SELECT_PIN);
     setPinInput(BT_MODE_SELECT_PIN);
-	
+
     lkbt51_init(false);
     wireless_init();
 #    ifdef BAT_LOW_LED_PIN
