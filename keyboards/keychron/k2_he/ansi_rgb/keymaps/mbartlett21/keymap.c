@@ -19,7 +19,6 @@
 
 enum layers {
     MAC_BASE,
-    MAC_FN,
     WIN_BASE,
     WIN_FN,
     WIN_MSE,
@@ -51,21 +50,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*   Shift               Z         X         C         V         B         N         M         ,         .         /                   Shift     Up        End     */
      KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,  KC_UP,    KC_END,
 /*   Ctrl      Gui       Alt                                     Space                                   Alt       WIN_FN    Ctrl      Left      Down      Rght    */
-     KC_LCTL,  KC_LOPTN, KC_LCMMD,                               KC_SPC,                                 KC_RCMMD,MO(MAC_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
-
-[MAC_FN] = LAYOUT_ansi_84(
-/*   Esc       F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12       PrtSc     Delete    Lights  */
-     _______,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   _______,  _______,  RGB_TOG,
-/*   `         1         2         3         4         5         6         7         8         9         0         -         =         Bksp                PgUp    */
-     _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
-/*   Tab       Q         W         E         R         T         Y         U         I         O         P         [         ]         \                   PgDn    */
-     RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
-/*   Caps      A         S         D         F         G         H         J         K         L         ;         '                   Enter               Home    */
-     _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,            _______,            _______,
-/*   Shift               Z         X         C         V         B         N         M         ,         .         /                   Shift     Up        End     */
-     _______,            _______,  _______,  _______,  _______,  BAT_LVL,  NK_TOGG,  _______,  _______,  _______,  _______,            _______,  _______,  _______,
-/*   Ctrl      Gui       Alt                                     Space                                   Alt       WIN_FN    Ctrl      Left      Down      Rght    */
-     _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  _______,  _______,  _______),
+     KC_LCTL,  KC_LOPTN, KC_LCMMD,                               KC_SPC,                                 KC_RCMMD,MO(WIN_FN),KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
 [WIN_BASE] = LAYOUT_ansi_84(
 /*   Esc       F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12       PrtSc     Delete    Lights  */
@@ -164,6 +149,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
         }
+    }
+    return true;
+}
+
+bool dip_switch_update_user(uint8_t index, bool active) {
+    if (index == 0) {
+        // active == set to windows
+        // layer 0: mac
+        // layer 1: windows
+        default_layer_set(1UL << (active ? 1 : 0));
+        return false; // Prevent the next level from changing it
     }
     return true;
 }
