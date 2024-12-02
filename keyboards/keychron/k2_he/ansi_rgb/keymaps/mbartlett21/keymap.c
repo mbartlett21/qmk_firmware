@@ -153,6 +153,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    uint8_t layer = get_highest_layer(layer_state | default_layer_state);
+    if (layer >= WIN_FN) {
+        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                uint8_t index = g_led_config.matrix_co[row][col];
+                uint16_t kc = 0;
+
+                if (index >= led_min && index < led_max && index != NO_LED &&
+                        (kc = keymap_key_to_keycode(layer, (keypos_t){col,row})) > KC_TRNS) {
+                    if (kc >= NEW_SAFE_RANGE)
+                        rgb_matrix_set_color(index, RGB_WHITE);
+                    else if (kc > 0xFF)
+                        rgb_matrix_set_color(index, RGB_GREEN);
+                    else
+                        rgb_matrix_set_color(index, RGB_RED);
+                }
+            }
+        }
+    }
+    return false;
+}
+
 bool dip_switch_update_user(uint8_t index, bool active) {
     if (index == 0) {
         // active == set to windows
