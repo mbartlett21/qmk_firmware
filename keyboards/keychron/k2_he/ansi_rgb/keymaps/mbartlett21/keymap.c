@@ -93,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*   Shift               Z         X         C         V         B         N         M         ,         .         /                   Shift     Up        End     */
      _______,            NK_TOGG,  _______,  _______,  _______,  BAT_LVL,  EN_DASH,  EM_DASH,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,  _______,  _______,
 /*   Ctrl      Gui       Alt                                     Space                                   Alt       WIN_FN    Ctrl      Left      Down      Rght    */
-     _______,  _______,  _______,                                _______,                              TG(WIN_MSE),_______,  _______,  _______,  _______,  _______)
+     _______,  _______,  _______,                                _______,                              TG(WIN_MSE),_______,  _______,  _______,  _______,  _______),
 
 [WIN_MSE] = LAYOUT_ansi_84(
 /*   Esc       F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12       PrtSc     Delete    Lights  */
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*   Shift               Z         X         C         V         B         N         M         ,         .         /                   Shift     Up        End     */
      _______,            _______,  KC_WH_D,  KC_WH_R,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,  KC_MS_U,  _______,
 /*   Ctrl      Gui       Alt                                     Space                                   Alt       WIN_FN    Ctrl      Left      Down      Rght    */
-     _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  KC_MS_L,  KC_MS_D,  KC_MS_R)
+     _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  KC_MS_L,  KC_MS_D,  KC_MS_R),
 };
 
 // clang-format on
