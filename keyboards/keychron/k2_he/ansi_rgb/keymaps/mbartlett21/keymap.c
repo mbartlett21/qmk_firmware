@@ -25,6 +25,16 @@ enum layers {
     WIN_MSE,
 };
 
+enum custom_keycodes {
+    DEGREE = NEW_SAFE_RANGE,
+    EN_DASH,
+    EM_DASH,
+    MICRO,
+};
+
+#undef KC_TASK
+#define KC_TASK LGUI(KC_TAB)
+#define KC_FLXP LGUI(KC_E)
 #define KC_MCAP LT(WIN_MSE,KC_CAPS)
 
 // clang-format off
@@ -73,15 +83,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [WIN_FN] = LAYOUT_ansi_84(
 /*   Esc       F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12       PrtSc     Delete    Lights  */
-     _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FILE,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  _______,  RGB_TOG,
+     _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  _______,  RGB_TOG,
 /*   `         1         2         3         4         5         6         7         8         9         0         -         =         Bksp                PgUp    */
      _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
 /*   Tab       Q         W         E         R         T         Y         U         I         O         P         [         ]         \                   PgDn    */
-     RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
+     RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  MICRO,    _______,  DEGREE,   _______,  _______,  _______,  _______,            _______,
 /*   Caps      A         S         D         F         G         H         J         K         L         ;         '                   Enter               Home    */
    TG(WIN_MSE),RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  DM_PLY1,  DM_PLY2,  _______,            _______,            _______,
 /*   Shift               Z         X         C         V         B         N         M         ,         .         /                   Shift     Up        End     */
-     _______,            _______,  _______,  _______,  _______,  BAT_LVL,  NK_TOGG,  _______,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,  _______,  _______,
+     _______,            NK_TOGG,  _______,  _______,  _______,  BAT_LVL,  EN_DASH,  EM_DASH,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,  _______,  _______,
 /*   Ctrl      Gui       Alt                                     Space                                   Alt       WIN_FN    Ctrl      Left      Down      Rght    */
      _______,  _______,  _______,                                _______,                              TG(WIN_MSE),_______,  _______,  _______,  _______,  _______)
 
@@ -102,8 +112,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // clang-format on
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_keychron_common(keycode, record)) {
-        return false;
+    if (keycode < NEW_SAFE_RANGE) {
+        if (!process_record_keychron_common(keycode, record)) {
+            return false;
+        }
+        return true;
+    } else {
+        switch (keycode) {
+        case DEGREE:
+            // Alt + 0176
+            if (record->event.pressed) {
+                register_code(KC_RALT);
+                tap_code(KC_P0);
+                tap_code(KC_P1);
+                tap_code(KC_P7);
+                tap_code(KC_P6);
+                unregister_code(KC_RALT);
+            }
+            break;
+        case EN_DASH:
+            // Alt + 0150
+            if (record->event.pressed) {
+                register_code(KC_RALT);
+                tap_code(KC_P0);
+                tap_code(KC_P1);
+                tap_code(KC_P5);
+                tap_code(KC_P0);
+                unregister_code(KC_RALT);
+            }
+            break;
+        case EM_DASH:
+            // Alt + 0151
+            if (record->event.pressed) {
+                register_code(KC_RALT);
+                tap_code(KC_P0);
+                tap_code(KC_P1);
+                tap_code(KC_P5);
+                tap_code(KC_P1);
+                unregister_code(KC_RALT);
+            }
+            break;
+        case MICRO:
+            // Alt + 0181
+            if (record->event.pressed) {
+                register_code(KC_RALT);
+                tap_code(KC_P0);
+                tap_code(KC_P1);
+                tap_code(KC_P8);
+                tap_code(KC_P1);
+                unregister_code(KC_RALT);
+            }
+            break;
+        }
     }
     return true;
 }
