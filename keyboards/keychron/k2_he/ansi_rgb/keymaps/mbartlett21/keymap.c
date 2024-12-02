@@ -72,11 +72,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /*   `         1         2         3         4         5         6         7         8         9         0         -         =         Bksp                PgUp    */
      _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
 /*   Tab       Q         W         E         R         T         Y         U         I         O         P         [         ]         \                   PgDn    */
-     RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  MICRO,    _______,  DEGREE,   _______,  _______,  _______,  _______,            _______,
+     RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  MICRO,    _______,  DEGREE,   XXXXXXX,  _______,  _______,  _______,            _______,
 /*   Caps      A         S         D         F         G         H         J         K         L         ;         '                   Enter               Home    */
    TG(WIN_MSE),RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  DM_PLY1,  DM_PLY2,  _______,            _______,            _______,
 /*   Shift               Z         X         C         V         B         N         M         ,         .         /                   Shift     Up        End     */
-     _______,            NK_TOGG,  _______,  _______,  _______,  BAT_LVL,  EN_DASH,  EM_DASH,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,  _______,  _______,
+     _______,            XXXXXXX,  XXXXXXX,  XXXXXXX,  NK_TOGG,  BAT_LVL,  EN_DASH,  EM_DASH,  DM_REC1,  DM_REC2,  DM_RSTP,            _______,  _______,  _______,
 /*   Ctrl      Gui       Alt                                     Space                                   Alt       WIN_FN    Ctrl      Left      Down      Rght    */
      _______,  _______,  _______,                                _______,                              TG(WIN_MSE),_______,  _______,  _______,  _______,  _______),
 
