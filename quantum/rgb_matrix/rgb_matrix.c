@@ -797,7 +797,7 @@ void rgb_matrix_disable_time_reset(void) {
     rgb_anykey_timer = 0;
 }
 
-bool rgb_matrix_timeouted(void) {
+bool rgb_matrix_timedout(void) {
     return (rgb_anykey_timer > rgb_matrix_timeout);
 }
 #endif

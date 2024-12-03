@@ -1,7 +1,7 @@
 
 JOYSTICK_ENABLE = yes
 JOYSTICK_DRIVER = digital
-# Inscrease stack size to avoid crushing of eeprom_update_block()
+# Increase stack size to avoid crushing of eeprom_update_block()
 USE_PROCESS_STACKSIZE = 0x2000
 USE_FPU = yes
 

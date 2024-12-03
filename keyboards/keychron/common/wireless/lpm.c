@@ -69,7 +69,7 @@ void lpm_init(void) {
 inline void lpm_timer_reset(void) {
     lpm_time_up      = false;
     lpm_timer_buffer = timer_read32();
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
     if (wireless_get_state() == WT_CONNECTED)
         lpm_reset_time = CONNECTED_PROCESS_TIME;
     else
@@ -209,7 +209,7 @@ static inline void lpm_wakeup(void) {
     if (wireless_transport.init) wireless_transport.init(true);
     battery_init();
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #ifdef ANALOG_MATRIX_WAKEUP_PIN
         palDisableLineEvent(ANALOG_MATRIX_WAKEUP_PIN);
 #endif
@@ -271,10 +271,10 @@ void lpm_task(void) {
 #if defined(LED_MATRIX_ENABLE) || defined(RGB_MATRIX_ENABLE)
             if (
 #ifdef LED_MATRIX_ENABLE
-            !led_matrix_is_enabled() || (led_matrix_is_enabled() && led_matrix_is_driver_shutdown() || (wireless_get_state() == WT_CONNECTED && led_matrix_timeouted())))
+            !led_matrix_is_enabled() || (led_matrix_is_enabled() && led_matrix_is_driver_shutdown() || (wireless_get_state() == WT_CONNECTED && led_matrix_timedout())))
 #endif
 #ifdef RGB_MATRIX_ENABLE
-            !rgb_matrix_is_enabled () || (rgb_matrix_is_enabled() && (rgb_matrix_is_driver_shutdown() || (wireless_get_state() == WT_CONNECTED && rgb_matrix_timeouted())))
+            !rgb_matrix_is_enabled () || (rgb_matrix_is_enabled() && (rgb_matrix_is_driver_shutdown() || (wireless_get_state() == WT_CONNECTED && rgb_matrix_timedout())))
 #endif
             )
 #endif

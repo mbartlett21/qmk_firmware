@@ -45,7 +45,7 @@ static bool       pincodeEntry             = false;
 uint8_t           wireless_report_protocol = true;
 
 /* declarations */
-uint8_t wreless_keyboard_leds(void);
+uint8_t wireless_keyboard_leds(void);
 void    wireless_send_keyboard(report_keyboard_t *report);
 void    wireless_send_nkro(report_nkro_t *report);
 void    wireless_send_mouse(report_mouse_t *report);
@@ -55,7 +55,7 @@ void    wireless_send_xinput(report_xinput_t *report);
 bool    process_record_wireless(uint16_t keycode, keyrecord_t *record);
 
 /* host struct */
-host_driver_t wireless_driver = {wreless_keyboard_leds, wireless_send_keyboard, wireless_send_nkro, wireless_send_mouse, wireless_send_extra,
+host_driver_t wireless_driver = {wireless_keyboard_leds, wireless_send_keyboard, wireless_send_nkro, wireless_send_mouse, wireless_send_extra,
 #ifdef JOYSTICK_ENABLE
                                  wireless_send_joystick,
 #endif
@@ -126,7 +126,7 @@ void wireless_init(void) {
 }
 
 /*
- * Bluetooth trasponrt init. Bluetooth module driver shall use this function to register a callback
+ * Bluetooth transport init. Bluetooth module driver shall use this function to register a callback
  * to its implementation.
  */
 void wireless_set_transport(wt_func_t *transport) {
@@ -160,7 +160,7 @@ void wireless_pairing_ex(uint8_t host_idx, void *param) {
  * Initiate connection request to paired host
  */
 void wireless_connect(void) {
-    /*  Work around empty report after wakeup, which leads to reconneect/disconnected loop */
+    /*  Work around empty report after wakeup, which leads to reconnect/disconnected loop */
     if (battery_is_critical_low() || timer_read32() == 0) return;
 
     if (wireless_state == WT_RECONNECTING && !indicator_is_running()) {
@@ -339,7 +339,7 @@ static void wireless_hid_set_protocol(bool report_protocol) {
     wireless_report_protocol = false;
 }
 
-uint8_t wreless_keyboard_leds(void) {
+uint8_t wireless_keyboard_leds(void) {
     if (wireless_state == WT_CONNECTED) {
         return led_state;
     }
@@ -422,7 +422,7 @@ void wireless_send_system(uint16_t data) {
 void wireless_send_consumer(uint16_t data) {
     if (wireless_state == WT_CONNECTED) {
 #ifndef DISABLE_REPORT_BUFFER
-        if (report_buffer_is_empty() && report_buffer_next_inverval()) {
+        if (report_buffer_is_empty() && report_buffer_next_interval()) {
             if (wireless_transport.send_consumer) wireless_transport.send_consumer(data);
             report_buffer_update_timer();
         } else {
@@ -538,8 +538,8 @@ void wireless_event_task(void) {
             case EVT_HID_SET_PROTOCOL:
                 wireless_hid_set_protocol(event.params.protocol);
                 break;
-            case EVT_CONECTION_INTERVAL:
-                report_buffer_set_inverval(event.params.interval);
+            case EVT_CONNECTION_INTERVAL:
+                report_buffer_set_interval(event.params.interval);
                 break;
             default:
                 break;

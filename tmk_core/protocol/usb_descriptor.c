@@ -1370,13 +1370,13 @@ uint16_t get_usb_descriptor(const uint16_t wValue, const uint16_t wIndex, const 
 }
 
 #ifdef XINPUT_ENABLE
-__attribute__((weak)) void get_usb_vendor_descriptor_kb(uint8_t recipient, uint8_t reqeuest, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress, uint16_t *size) { }
+__attribute__((weak)) void get_usb_vendor_descriptor_kb(uint8_t recipient, uint8_t request, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress, uint16_t *size) { }
 
-uint16_t get_usb_vendor_descriptor(uint8_t recipient, uint8_t reqeuest, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress) {
+uint16_t get_usb_vendor_descriptor(uint8_t recipient, uint8_t request, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress) {
     const void*   Address         = NULL;
     uint16_t      Size            = NO_DESCRIPTOR;
 
-    if (recipient == USB_RTYPE_RECIPIENT_DEVICE && reqeuest == USB_REQ_GET_MS_DESCRIPTOR) {
+    if (recipient == USB_RTYPE_RECIPIENT_DEVICE && request == USB_REQ_GET_MS_DESCRIPTOR) {
         if (wIndex == 4) {
             Address = &compatIdDescriptor;
             Size = 0x28;
@@ -1387,7 +1387,7 @@ uint16_t get_usb_vendor_descriptor(uint8_t recipient, uint8_t reqeuest, const ui
     }
 
     *DescriptorAddress = Address;
-    get_usb_vendor_descriptor_kb(recipient, reqeuest, wValue, wIndex, wLength, DescriptorAddress, &Size);
+    get_usb_vendor_descriptor_kb(recipient, request, wValue, wIndex, wLength, DescriptorAddress, &Size);
 
     return Size;
 }

@@ -38,7 +38,7 @@ enum {
     P2P4G,
     BAT_LVL,
 #endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
     PROF1,
     PROF2,
     PROF3,
@@ -53,7 +53,7 @@ enum {
     #define P2P4G       KC_TRANS
     #define BAT_LVL     KC_TRANS
 #endif
-#ifndef ANANLOG_MATRIX
+#ifndef ANALOG_MATRIX
     #define PROF1 KC_TRANS
     #define PROF2 KC_TRANS
     #define PROF3 KC_TRANS
@@ -64,7 +64,7 @@ enum {
 #define KC_SNAP KC_SCREEN_SHOT
 #define KC_CTANA KC_CORTANA
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 enum {
     KEY_PRESS_FN = 0x01 << 0,
     KEY_PRESS_P  = 0x01 << 1,
@@ -83,7 +83,7 @@ void keychron_common_task(void);
 #ifdef ENCODER_ENABLE
 void encoder_cb_init(void);
 #endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 void analog_matrix_rx(uint8_t *data, uint8_t length);
 #endif
 

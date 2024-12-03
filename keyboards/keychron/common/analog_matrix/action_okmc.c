@@ -58,7 +58,7 @@ static void report_action(bool add, uint16_t keycode) {
 }
 
 static void release_okmc_keys(okmc_config_t *okmc) {
-    // Relase all keys in the OKMC settings
+    // Release all keys in the OKMC settings
     for (uint8_t i = 0; i < 4; ++i) {
         if (okmc->keycode[i]) {
             report_action(0, okmc->keycode[i]);
@@ -149,7 +149,7 @@ static void inline deep_deactuate(okmc_config_t *okmc) {
 bool okmc_action(analog_key_t *key) {
     bool                     changed    = false;
     analog_matrix_profile_t *cur_prof   = profile_get_current();
-    okmc_traval_config_t    *travel_cfg = &cur_prof->okmc[key->okmc_idx].travel;
+    okmc_travel_config_t    *travel_cfg = &cur_prof->okmc[key->okmc_idx].travel;
 
     switch (key->state) {
         case OKMC_RELEASED:

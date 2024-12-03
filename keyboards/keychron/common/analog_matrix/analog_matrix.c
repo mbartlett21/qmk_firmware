@@ -26,8 +26,8 @@
 #include "sqrt.h"
 #include "game_controller_common.h"
 
-#ifndef CAL_SAMPL_CNT
-#    define CAL_SAMPL_CNT 8
+#ifndef CAL_SAMPLE_CNT
+#    define CAL_SAMPLE_CNT 8
 #endif
 
 #ifndef REF_ZERO_TRAVEL
@@ -83,7 +83,7 @@ enum {
     AMC_SELECT_PROFILE,
     AMC_GET_PROFILE_RAW,
     AMC_SET_PROFILE_NAME,
-    AMC_SET_TRAVAL,
+    AMC_SET_TRAVEL,
     AMC_SET_ADVANCE_MODE,
     AMC_SET_SOCD,
     AMC_RESET_PROFILE = 0x1E,
@@ -116,12 +116,12 @@ static calibrated_value_t calib_values[MATRIX_ROWS][MATRIX_COLS];
 static calibrated_value_t saved_calib_values[MATRIX_ROWS][MATRIX_COLS];
 static analog_key_t       analog_key_matrix[MATRIX_ROWS][MATRIX_COLS];
 
-static uint16_t      calibrate_values[MATRIX_ROWS][MATRIX_COLS][CAL_SAMPL_CNT];
+static uint16_t      calibrate_values[MATRIX_ROWS][MATRIX_COLS][CAL_SAMPLE_CNT];
 static calibration_t auto_calib[MATRIX_ROWS][MATRIX_COLS];
 static uint8_t       cali_state = CALIB_OFF;
 static uint8_t       last_cali_state;
 static uint8_t       cur_calib = 0;
-traval_config_t      regular;
+travel_config_t      regular;
 static float         scale_factor[MATRIX_ROWS][MATRIX_COLS];
 static matrix_row_t  calib_state_matrix[MATRIX_ROWS];
 // Mark invalid key on abnormal value of manual zero travel calibration, for manufacturing use
@@ -181,13 +181,13 @@ void update_key_config(uint8_t row, uint8_t col) {
         p_key->mode = p_key_cfg->adv_mode;
     }
 
-    // Update actuaction point
+    // Update actuation point
     if (p_key_cfg->act_pt == 0)
         p_key->regular.actn_pt = cur_prof->global.act_pt;
     else
         p_key->regular.actn_pt = p_key_cfg->act_pt;
 
-    // Update deactuaction point
+    // Update deactuation point
     p_key->regular.deactn_pt = p_key->regular.actn_pt - 3 > 0 ? p_key->regular.actn_pt - 3 : 0;
 
     // Update rapid trigger sensitivity
@@ -327,7 +327,7 @@ static bool calibrate(void) {
                 if ((analog_matrix_mask[r] & (0x01<<c)) == 0) continue;
 
                 uint32_t sum = 0;
-                for (uint8_t i=0; i<CAL_SAMPL_CNT; i++) {
+                for (uint8_t i=0; i<CAL_SAMPLE_CNT; i++) {
                     if (calibrate_values[r][c][cur_calib] > VALID_ANALOG_RAW_VALUE_MIN)
                         sum += calibrate_values[r][c][cur_calib];
                     else {
@@ -337,7 +337,7 @@ static bool calibrate(void) {
                 }
 
                 if (sum) {
-                    uint16_t avg = sum/CAL_SAMPL_CNT;
+                    uint16_t avg = sum/CAL_SAMPLE_CNT;
                     // clang-format off
                     if ((calib_values[r][c].full_travel == 0 && avg < calib_values[r][c].zero_travel - DEFAULT_FULL_RANGE + 100) ||
                         (calib_values[r][c].full_travel != 0 && avg + BOTTOM_JITTER < calib_values[r][c].full_travel)) {
@@ -358,7 +358,7 @@ static bool calibrate(void) {
                 }
             }
 
-        if (++cur_calib >= CAL_SAMPL_CNT) cur_calib = 0;
+        if (++cur_calib >= CAL_SAMPLE_CNT) cur_calib = 0;
 
         // Set the timer to delay exit calibrating so that we can get enough samples of last key
         if (done && calib_timer == 0) calib_timer = timer_read32();
@@ -371,7 +371,7 @@ static bool calibrate(void) {
         }
         if (!update) return false;
     } else if (cali_state == CALIB_ZERO_TRAVEL_POWER_ON || cali_state == CALIB_ZERO_TRAVEL_MANUAL) {
-        if (cur_calib + 1 < CAL_SAMPL_CNT) {
+        if (cur_calib + 1 < CAL_SAMPLE_CNT) {
             ++cur_calib;
             return false;
         }
@@ -383,10 +383,10 @@ static bool calibrate(void) {
                 if ((analog_matrix_mask[r] & (0x01 << c)) == 0) continue;
 
                 uint32_t sum = 0;
-                for (uint8_t i = 0; i < CAL_SAMPL_CNT; i++)
+                for (uint8_t i = 0; i < CAL_SAMPLE_CNT; i++)
                     sum += calibrate_values[r][c][i];
 
-                uint16_t avg_val = sum / CAL_SAMPL_CNT;
+                uint16_t avg_val = sum / CAL_SAMPLE_CNT;
 
                 // Check validity
                 if (avg_val > VALID_ANALOG_RAW_VALUE_MAX || avg_val < DEFAULT_ZERO_TRAVEL_VALUE - DEFAULT_FULL_RANGE / 5) {
@@ -476,7 +476,7 @@ void auto_calibration_init(void) {
         }
 }
 
-void auto_caliration_check(uint8_t row, uint8_t col, uint16_t value) {
+void auto_calibration_check(uint8_t row, uint8_t col, uint16_t value) {
     calibration_t *p = &auto_calib[row][col];
 
     switch (p->state) {
@@ -507,13 +507,13 @@ void auto_caliration_check(uint8_t row, uint8_t col, uint16_t value) {
             } else if (abs(p->value.zero_travel - value) <= AUTO_CALIB_ZERO_TRAVEL_JITTER_VALUE) {
                 //  Add the data to buffer
                 calibrate_values[row][col][p->cycle++] = value;
-                if (p->cycle >= CAL_SAMPL_CNT) {
-                    if (timer_elapsed32(p->full_travel_time) < AUTO_CALIB_VALID_RELASING_TIME) {
+                if (p->cycle >= CAL_SAMPLE_CNT) {
+                    if (timer_elapsed32(p->full_travel_time) < AUTO_CALIB_VALID_RELEASING_TIME) {
                         uint32_t avg_val = 0;
-                        for (uint8_t i = 0; i < CAL_SAMPL_CNT; i++)
+                        for (uint8_t i = 0; i < CAL_SAMPLE_CNT; i++)
                             avg_val += calibrate_values[row][col][i];
 
-                        avg_val /= CAL_SAMPL_CNT;
+                        avg_val /= CAL_SAMPLE_CNT;
                         avg_val -= ZERO_TRAVEL_DEAD_ZONE;
 
                         p->value.zero_travel = avg_val;
@@ -666,10 +666,10 @@ void analog_matrix_init(void) {
     analog_matrix_eeconfig_init();
 
     cur_calib = 0;
-    memset(calibrate_values, 0, MATRIX_ROWS * MATRIX_COLS * CAL_SAMPL_CNT * sizeof(calibrate_values[0][0][0]));
+    memset(calibrate_values, 0, MATRIX_ROWS * MATRIX_COLS * CAL_SAMPLE_CNT * sizeof(calibrate_values[0][0][0]));
 
     // 解决 boot magic 扫描无效, TODO: 这里会增加启动时间
-    for (uint8_t i = 0; i < CAL_SAMPL_CNT; i++)
+    for (uint8_t i = 0; i < CAL_SAMPLE_CNT; i++)
         matrix_scan();
 }
 
@@ -681,7 +681,7 @@ bool update_raw_value(uint8_t row, uint8_t col, uint16_t value) {
         analog_key_matrix[row][col].value     = value; // for debug
         return false;
     }
-    auto_caliration_check(row, col, value);
+    auto_calibration_check(row, col, value);
 
     analog_key_t *k = &analog_key_matrix[row][col];
 
@@ -766,7 +766,7 @@ bool set_calibrate(uint8_t *data) {
         case CALIB_ZERO_TRAVEL_MANUAL:
             cali_state = data[0];
             cur_calib  = 0;
-            memset(calibrate_values, 0, MATRIX_ROWS * MATRIX_COLS * CAL_SAMPL_CNT * sizeof(calibrate_values[0][0][0]));
+            memset(calibrate_values, 0, MATRIX_ROWS * MATRIX_COLS * CAL_SAMPLE_CNT * sizeof(calibrate_values[0][0][0]));
             calib_ind_timer = 0;
 
             memset(calib_values, 0, sizeof(calib_values));
@@ -901,7 +901,7 @@ void analog_matrix_rx(uint8_t *data, uint8_t length) {
             data[2] = success ? 0 : 1;
             break;
 
-        case AMC_SET_TRAVAL: {
+        case AMC_SET_TRAVEL: {
             uint8_t  profile               = data[2];
             uint8_t  mode                  = data[3];
             uint8_t  act_pt                = data[4];
@@ -915,7 +915,7 @@ void analog_matrix_rx(uint8_t *data, uint8_t length) {
                 }
             }
 
-            success = profile_set_traval(profile, mode, act_pt, sens, rls_sens, entire, row_mask);
+            success = profile_set_travel(profile, mode, act_pt, sens, rls_sens, entire, row_mask);
             data[2] = success ? 0 : 1;
         } break;
 

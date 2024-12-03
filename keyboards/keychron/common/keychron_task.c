@@ -21,7 +21,7 @@
 #ifdef FACTORY_TEST_ENABLE
 #    include "factory_test.h"
 #endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #include "analog_matrix.h"
 #endif
 
@@ -53,7 +53,7 @@ bool led_matrix_indicators_keychron(void) {
 #    ifdef FACTORY_TEST_ENABLE
     factory_test_indicator();
 #    endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
     analog_matrix_indicator();
 #endif
     return true;
@@ -69,7 +69,7 @@ bool rgb_matrix_indicators_keychron(void) {
 #    ifdef FACTORY_TEST_ENABLE
     factory_test_indicator();
 #    endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
     analog_matrix_indicator();
 #endif
     return true;

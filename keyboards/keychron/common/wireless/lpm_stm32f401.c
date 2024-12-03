@@ -54,7 +54,7 @@ bool lpm_set(pm_t mode) {
 #if STOP_MODE_MAIN_REGULATOR_LOW_VOLTAGE
                     PWR_CR_MRLVDS |
 #endif
-#if STOP_MODE_LOW_POWER_REGULATOR_LOW_VOLTAG
+#if STOP_MODE_LOW_POWER_REGULATOR_LOW_VOLTAGE
                     PWR_CR_LPLVDS |
 #endif
 #if STOP_MODE_FLASH_POWER_DOWN

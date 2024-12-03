@@ -29,7 +29,7 @@
 
 #define ENCODER_SWITCH_PIN A3
 #define ENCODER_MATRIX_ROW 0
-#define ENCODER_MATROX_COL 18
+#define ENCODER_MATRIX_COL 18
 
 #ifdef JOYSTICK_ENABLE
 #    define JOYSTICK_AXIS_COUNT 6
@@ -79,12 +79,12 @@
 /* Backlit disable timeout when keyboard is connected(unit: second) */
 #        define CONNECTED_BACKLIGHT_DISABLE_TIMEOUT 600
 
-/* Reinit LED driver on tranport changed */
+/* Reinit LED driver on transport changed */
 #        define REINIT_LED_DRIVER 1
 
 #    endif
 
-/* Keep USB connection in blueooth mode */
+/* Keep USB connection in bluetooth mode */
 #    define KEEP_USB_CONNECTION_IN_WIRELESS_MODE
 
 /* Enable bluetooth NKRO */

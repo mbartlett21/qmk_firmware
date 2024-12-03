@@ -240,7 +240,7 @@ void        rgb_matrix_set_flags_noeeprom(led_flags_t flags);
 #    if RGB_MATRIX_TIMEOUT > 0
 void rgb_matrix_disable_timeout_set(uint32_t timeout);
 void rgb_matrix_disable_time_reset(void);
-bool rgb_matrix_timeouted(void);
+bool rgb_matrix_timedout(void);
 #    endif
 #endif
 #ifdef RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE

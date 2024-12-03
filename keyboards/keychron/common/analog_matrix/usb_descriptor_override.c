@@ -131,7 +131,7 @@ void get_usb_descriptor_kb(const uint16_t wValue, const uint16_t wIndex, const u
 #endif
 }
 
-void get_usb_vendor_descriptor_kb(uint8_t recipient, uint8_t reqeuest, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void **const DescriptorAddress, uint16_t *size) {
+void get_usb_vendor_descriptor_kb(uint8_t recipient, uint8_t request, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void **const DescriptorAddress, uint16_t *size) {
 #if XINPUT_ENABLE
     if (!game_controller_xinput_enabled()) {
         *size = 0;

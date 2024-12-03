@@ -332,9 +332,9 @@ enum usb_endpoints {
 #endif
 
 uint16_t get_usb_descriptor(const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress);
-uint16_t get_usb_vendor_descriptor(uint8_t recipient, uint8_t reqeuest, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress);
+uint16_t get_usb_vendor_descriptor(uint8_t recipient, uint8_t request, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress);
 #ifdef XINPUT_ENABLE
-uint16_t get_usb_vendor_descriptor(uint8_t recipient, uint8_t reqeuest, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress);
-void get_usb_vendor_descriptor_kb(uint8_t recipient, uint8_t reqeuest, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress, uint16_t *size);
+uint16_t get_usb_vendor_descriptor(uint8_t recipient, uint8_t request, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress);
+void get_usb_vendor_descriptor_kb(uint8_t recipient, uint8_t request, const uint16_t wValue, const uint16_t wIndex, const uint16_t wLength, const void** const DescriptorAddress, uint16_t *size);
 #endif
 

@@ -61,7 +61,7 @@ enum {
 };
 
 static indicator_config_t pairing_config      = INDICATOR_CONFIG_PARING;
-static indicator_config_t connected_config    = INDICATOR_CONFIG_CONNECTD;
+static indicator_config_t connected_config    = INDICATOR_CONFIG_CONNECTED;
 static indicator_config_t reconnecting_config = INDICATOR_CONFIG_RECONNECTING;
 static indicator_config_t disconnected_config = INDICATOR_CONFIG_DISCONNECTED;
 indicator_config_t        indicator_config;
@@ -121,7 +121,7 @@ static pin_t p24g_led_pin_list[P24G_HOST_DEVICES_COUNT] = P24G_HOST_LED_PIN_LIST
 #    define LED_DRIVER_DISABLE_NOEEPROM led_matrix_disable_noeeprom
 #    define LED_DRIVER_DISABLE_TIMEOUT_SET led_matrix_disable_timeout_set
 #    define LED_DRIVER_DISABLE_TIME_RESET led_matrix_disable_time_reset
-#    define LED_DRIVER_TIMEOUTED led_matrix_timeouted
+#    define LED_DRIVER_TIMEDOUT led_matrix_timedout
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
@@ -148,7 +148,7 @@ static pin_t p24g_led_pin_list[P24G_HOST_DEVICES_COUNT] = P24G_HOST_LED_PIN_LIST
 #    define LED_DRIVER_DISABLE_NOEEPROM rgb_matrix_disable_noeeprom
 #    define LED_DRIVER_DISABLE_TIMEOUT_SET rgb_matrix_disable_timeout_set
 #    define LED_DRIVER_DISABLE_TIME_RESET rgb_matrix_disable_time_reset
-#    define LED_DRIVER_TIMEOUTED rgb_matrix_timeouted
+#    define LED_DRIVER_TIMEDOUT rgb_matrix_timedout
 #endif
 
 bool LED_INDICATORS_KB(void);
@@ -522,7 +522,7 @@ void indicator_battery_low(void) {
 
             bat_low_backlit_indicator = timer_read32();
 
-            /*  Restore backligth state */
+            /*  Restore backlight state */
             if ((bat_low_ind_state & 0x0F) > (LOW_BAT_LED_BLINK_TIMES)) {
 #    if defined(BAT_LOW_LED_PIN)
                 writePin(BAT_LOW_LED_PIN, !BAT_LOW_LED_PIN_ON_STATE);
@@ -546,7 +546,7 @@ void indicator_battery_low(void) {
 }
 
 void indicator_task(void) {
-    bat_level_animiation_task();
+    bat_level_animation_task();
     if (indicator_config.value && timer_elapsed32(indicator_timer_buffer) >= next_period) {
         indicator_timer_cb((void *)&type);
         indicator_timer_buffer = timer_read32();
@@ -616,8 +616,8 @@ bool LED_INDICATORS_KB(void) {
 #        endif
 #    endif
 #    if (defined(LED_MATRIX_ENABLE) || defined(RGB_MATRIX_ENABLE)) && defined(BAT_LEVEL_LED_LIST)
-        if (bat_level_animiation_actived()) {
-            bat_level_animiation_indicate();
+        if (bat_level_animation_actived()) {
+            bat_level_animation_indicate();
         }
 #    endif
         static uint8_t last_host_index = 0xFF;
@@ -667,7 +667,7 @@ bool led_update_kb(led_t led_state) {
     if (res) {
         led_update_ports(led_state);
 
-        if (!LED_DRIVER_IS_ENABLED() || (LED_DRIVER_IS_ENABLED() && LED_DRIVER_TIMEOUTED())) {
+        if (!LED_DRIVER_IS_ENABLED() || (LED_DRIVER_IS_ENABLED() && LED_DRIVER_TIMEDOUT())) {
 #    if defined(LED_MATRIX_DRIVER_SHUTDOWN_ENABLE) || defined(RGB_MATRIX_DRIVER_SHUTDOWN_ENABLE)
             LED_DRIVER_EXIT_SHUTDOWN();
 #    endif

@@ -205,7 +205,7 @@ void        led_matrix_set_flags_noeeprom(led_flags_t flags);
 #    if LED_MATRIX_TIMEOUT > 0
 void led_matrix_disable_timeout_set(uint32_t timeout);
 void led_matrix_disable_time_reset(void);
-bool led_matrix_timeouted(void);
+bool led_matrix_timedout(void);
 #    endif
 #endif
 

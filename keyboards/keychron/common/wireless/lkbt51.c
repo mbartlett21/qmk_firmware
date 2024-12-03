@@ -750,14 +750,14 @@ static void ack_handler(uint8_t* data, uint8_t len) {
             switch (data[2]) {
                 case ACK_SUCCESS:
                     report_buffer_set_retry(0);
-                    report_buffer_set_inverval(connection_interval);
+                    report_buffer_set_interval(connection_interval);
                     break;
                 case ACK_FIFO_HALF_WARNING:
                     report_buffer_set_retry(0);
-                    report_buffer_set_inverval(connection_interval + 5);
+                    report_buffer_set_interval(connection_interval + 5);
                     break;
                 case ACK_FIFO_FULL_ERROR:
-                    report_buffer_set_inverval(connection_interval + 10);
+                    report_buffer_set_interval(connection_interval + 10);
                     break;
             }
             break;
@@ -900,7 +900,7 @@ void lkbt51_task(void) {
                 if (connection_interval > 7) connection_interval /= 3;
 
                 memset(&event, 0, sizeof(event));
-                event.evt_type        = EVT_CONECTION_INTERVAL;
+                event.evt_type        = EVT_CONNECTION_INTERVAL;
                 event.params.interval = connection_interval;
                 wireless_event_enqueue(event);
             }
@@ -914,7 +914,7 @@ void lkbt51_task(void) {
         if (wait_for_new_pkt) {
             for (uint8_t i = 10; i < BUFFER_SIZE - 5; i++) {
                 if (buf[i] == 0xAA && buf[i + 1] == 0x57     // Packet Head
-                    && (~buf[i + 2] & 0xFF) == buf[i + 3]) { // Check wheather len is valid
+                    && (~buf[i + 2] & 0xFF) == buf[i + 3]) { // Check whether len is valid
                     len              = buf[i + 2];
                     sn               = buf[i + 4];
                     pbuf             = &buf[i + 5];

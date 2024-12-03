@@ -21,7 +21,7 @@
 #include "profile.h"
 #include "action_socd.h"
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #    ifndef PROF_TRIG_KEY_ROW
 #        define PROF_TRIG_KEY_ROW 2
 #    endif
@@ -63,7 +63,7 @@ enum {
     ADV_MODE_TOGGLE,
 };
 
-extern uint8_t            profile_gobal_mode[PROFILE_COUNT];
+extern uint8_t            profile_global_mode[PROFILE_COUNT];
 extern uint16_t           default_profiles[PROFILE_COUNT][MATRIX_ROWS][MATRIX_COLS];
 
 static analog_matrix_profile_t  profile[PROFILE_COUNT];
@@ -92,9 +92,9 @@ void profile_init(bool reset) {
         memcpy(profile, buf + OFFSET_PROFILES_START, PROFILE_SIZE * PROFILE_COUNT);
 
         for (uint8_t i = 0; i < PROFILE_COUNT; i++) {
-            if (profile[i].global.mode == 0) profile[i].global.mode = profile_gobal_mode[i]; // global mode can't be 0
+            if (profile[i].global.mode == 0) profile[i].global.mode = profile_global_mode[i]; // global mode can't be 0
 
-            // Resotre to default if not in valid range
+            // Restore to default if not in valid range
             if (profile[i].global.act_pt == 0 || profile[i].global.act_pt > 40) profile[i].global.act_pt = DEFAULT_ACTUATION_POINT;
             if (profile[i].global.rpd_trig_sen == 0 || profile[i].global.rpd_trig_sen > 39) profile[i].global.rpd_trig_sen = DEFAULT_RAPID_TRIGGER_SENSITIVITY;
             if (profile[i].global.rpd_trig_sen_deact == 0 || profile[i].global.rpd_trig_sen > 39) profile[i].global.rpd_trig_sen_deact = profile[i].global.rpd_trig_sen;
@@ -154,7 +154,7 @@ bool profile_get_raw_data(uint8_t prof_idx, uint16_t offset, uint8_t size, uint8
     return true;
 }
 
-bool profile_set_traval(uint8_t prof_idx, uint8_t mode, uint8_t act_pt, uint8_t sens, uint8_t rls_sens, bool global, uint32_t row[]) {
+bool profile_set_travel(uint8_t prof_idx, uint8_t mode, uint8_t act_pt, uint8_t sens, uint8_t rls_sens, bool global, uint32_t row[]) {
 
     analog_matrix_profile_t *prof = profile_get(prof_idx);
 
@@ -280,7 +280,7 @@ bool profile_reset(uint8_t prof_index) {
 
     memset(prof, 0, sizeof(profile[0]));
     // Default
-    prof->global.mode               = profile_gobal_mode[prof_index];
+    prof->global.mode               = profile_global_mode[prof_index];
     prof->global.act_pt             = DEFAULT_ACTUATION_POINT;
     prof->global.rpd_trig_sen_deact = prof->global.rpd_trig_sen = DEFAULT_RAPID_TRIGGER_SENSITIVITY;
 

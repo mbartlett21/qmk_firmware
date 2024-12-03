@@ -24,7 +24,7 @@
 #ifdef LK_WIRELESS_ENABLE
 #    include "lkbt51.h"
 #endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #    include "analog_matrix.h"
 #endif
 
@@ -55,13 +55,13 @@ void get_support_feature(uint8_t *data) {
 #ifdef LK_WIRELESS_ENABLE
               | FEATURE_BLUETOOTH | FEATURE_P2P4G
 #endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
               | FEATURE_ANALOG_MATRIX
 #endif
         ;
 }
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 void send_analog_matrix(uint8_t *data, uint8_t length) {
     uint8_t offset = data[2];
     uint8_t rows = 28 / ((MATRIX_COLS + 7) / 8);
@@ -84,7 +84,7 @@ void send_analog_matrix(uint8_t *data, uint8_t length) {
 #endif
 
 bool kc_raw_hid_rx(uint8_t *data, uint8_t length) {
-#if defined(ANANLOG_MATRIX) && defined(VIA_ENABLE)
+#if defined(ANALOG_MATRIX) && defined(VIA_ENABLE)
     if (data[0] == id_get_keyboard_value && data[1] == id_switch_matrix_state) {
         send_analog_matrix(data, length);
         return false;
@@ -118,7 +118,7 @@ bool kc_raw_hid_rx(uint8_t *data, uint8_t length) {
             data[1] = get_highest_layer(default_layer_state);
             break;
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
         case KC_ANALOG_MATRIX:
             analog_matrix_rx(data, length);
             return true;

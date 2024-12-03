@@ -30,7 +30,7 @@
 #    define LOW_POWER_MODE PM_STOP
 #endif
 
-/* Wake pin used for blueooth module/controller to wake up MCU in low power mode*/
+/* Wake pin used for bluetooth module/controller to wake up MCU in low power mode*/
 #ifndef BLUETOOTH_INT_INPUT_PIN
 #    define WAKE_PIN A5
 #endif

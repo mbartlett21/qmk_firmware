@@ -704,7 +704,7 @@ void led_matrix_disable_time_reset(void) {
     led_anykey_timer = 0;
 }
 
-bool led_matrix_timeouted(void) {
+bool led_matrix_timedout(void) {
     return led_anykey_timer > led_matrix_timeout;
 }
 #endif

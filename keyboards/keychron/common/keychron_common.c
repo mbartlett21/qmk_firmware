@@ -27,7 +27,7 @@
 #ifdef LK_WIRELESS_ENABLE
 #    include "lkbt51.h"
 #endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #    include "profile.h"
 #endif
 
@@ -102,7 +102,7 @@ bool process_record_keychron_common(uint16_t keycode, keyrecord_t *record) {
             return false; // Skip all further processing of this key
 
         default:
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
             return process_record_profile( keycode, record);
 #endif
             break;
@@ -118,14 +118,14 @@ void keychron_common_task(void) {
         is_siri_active = false;
         siri_timer     = 0;
     }
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
     process_profile_select_combo();
 #endif
 }
 
 #ifdef ENCODER_ENABLE
 static void encoder_pad_cb(void *param) {
-    encoder_inerrupt_read((uint32_t)param);
+    encoder_interrupt_read((uint32_t)param);
 }
 
 void encoder_cb_init(void) {

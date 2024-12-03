@@ -16,8 +16,8 @@
 
 #pragma once
 
-void bat_level_animiation_start(uint8_t percentage);
-void bat_level_animiation_stop(void);
-bool bat_level_animiation_actived(void);
-void bat_level_animiation_indicate(void);
-void bat_level_animiation_task(void);
+void bat_level_animation_start(uint8_t percentage);
+void bat_level_animation_stop(void);
+bool bat_level_animation_actived(void);
+void bat_level_animation_indicate(void);
+void bat_level_animation_task(void);

@@ -29,10 +29,10 @@
 
 /* Battery voltage resistive voltage divider setting of MCU */
 #ifndef RVD_R1
-#    define RVD_R1 10 // Upper side resitor value (uint: KΩ)
+#    define RVD_R1 10 // Upper side resistor value (uint: KΩ)
 #endif
 #ifndef RVD_R2
-#    define RVD_R2 10 // Lower side resitor value (uint: KΩ)
+#    define RVD_R2 10 // Lower side resistor value (uint: KΩ)
 #endif
 
 /* Battery voltage resistive voltage divider setting of Bluetooth */
@@ -113,7 +113,7 @@ __attribute__((weak)) void battery_calculate_voltage(bool vol_src_bt, uint16_t v
         for (uint8_t i = 0; i < DRIVER_COUNT; i++)
             for (uint8_t j = 0; j < 192; j++)
                 totalBuf += g_pwm_buffer[i][j];
-        /* We assumpt it is linear relationship*/
+        /* We assume it is linear relationship*/
         voltage += (VOLTAGE_TRIM_LED_MATRIX * totalBuf / LED_MATRIX_LED_COUNT / 255);
     }
 #endif
@@ -124,7 +124,7 @@ __attribute__((weak)) void battery_calculate_voltage(bool vol_src_bt, uint16_t v
         for (uint8_t i = 0; i < DRIVER_COUNT; i++)
             for (uint8_t j = 0; j < 192; j++)
                 totalBuf += g_pwm_buffer[i][j];
-        /* We assumpt it is linear relationship*/
+        /* We assume it is linear relationship*/
         uint32_t compensation = VOLTAGE_TRIM_RGB_MATRIX * totalBuf / RGB_MATRIX_LED_COUNT / 255 / 3;
 
         voltage += compensation;

@@ -46,7 +46,7 @@ enum {
 };
 
 enum {
-    BT_MODE_DEFAUL,
+    BT_MODE_DEFAULT,
     BT_MODE_CLASSIC,
     BT_MODE_LE,
     BT_MODE_INVALID,
@@ -63,7 +63,7 @@ typedef struct {
 
 typedef struct {
     uint8_t  type;
-    uint16_t full_votage;
+    uint16_t full_voltage;
     uint16_t empty_voltage;
     uint16_t shutdown_voltage;
 } battery_param_t;
@@ -74,7 +74,7 @@ typedef struct {
     uint8_t  bluetooth_version;
     uint8_t  firmware_version[11];
     uint8_t  hardware_version[11];
-    uint16_t cmd_set_verson;
+    uint16_t cmd_set_version;
 } __attribute__((packed)) module_info_t;
 
 typedef struct {
@@ -87,9 +87,9 @@ typedef struct {
     uint8_t  rsvd1;
     uint8_t  rsvd2;
     uint8_t  vendor_id_source; /* 0: From Bluetooth SIG, 1: From USB-IF */
-    uint16_t verndor_id;       /* No effect, the vendor ID is 0x3434 */
+    uint16_t vendor_id;        /* No effect, the vendor ID is 0x3434 */
     uint16_t product_id;
-    /* Below parametes is only available for BLE module  */
+    /* Below parameters are only available for BLE module  */
     uint16_t le_connection_interval_min;
     uint16_t le_connection_interval_max;
     uint16_t le_connection_interval_timeout;

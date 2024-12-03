@@ -262,14 +262,14 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
 
 #if defined(ENCODER_MATRIX_ROW) && defined(ENCODER_MATRIX_ROW)
     if (readPin(ENCODER_SWITCH_PIN) == 0) {
-        if ((raw_matrix[ENCODER_MATRIX_ROW] & (1 << ENCODER_MATROX_COL)) == 0) {
+        if ((raw_matrix[ENCODER_MATRIX_ROW] & (1 << ENCODER_MATRIX_COL)) == 0) {
             matrix_changed = true;
-            raw_matrix[ENCODER_MATRIX_ROW] |= (1 << ENCODER_MATROX_COL);
+            raw_matrix[ENCODER_MATRIX_ROW] |= (1 << ENCODER_MATRIX_COL);
         }
     } else {
-        if ((raw_matrix[ENCODER_MATRIX_ROW] & (1 << ENCODER_MATROX_COL))) {
+        if ((raw_matrix[ENCODER_MATRIX_ROW] & (1 << ENCODER_MATRIX_COL))) {
             matrix_changed = true;
-            raw_matrix[ENCODER_MATRIX_ROW] &= ~(1 << ENCODER_MATROX_COL);
+            raw_matrix[ENCODER_MATRIX_ROW] &= ~(1 << ENCODER_MATRIX_COL);
         }
     }
 #endif

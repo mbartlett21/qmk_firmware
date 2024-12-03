@@ -25,8 +25,8 @@
 #endif
 
 /* Indication on Connected */
-#ifndef INDICATOR_CONFIG_CONNECTD
-#    define INDICATOR_CONFIG_CONNECTD {INDICATOR_ON_OFF, 2000, 250, 2000, true, 0};
+#ifndef INDICATOR_CONFIG_CONNECTED
+#    define INDICATOR_CONFIG_CONNECTED {INDICATOR_ON_OFF, 2000, 250, 2000, true, 0};
 #endif
 
 /* Reconnecting indication */

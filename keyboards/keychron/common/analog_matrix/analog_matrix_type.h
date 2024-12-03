@@ -77,7 +77,7 @@ typedef struct __attribute__((__packed__)){
 typedef struct __attribute__((__packed__)) {
     uint8_t actn_pt;                        // unit: 0.1mm
     uint8_t deactn_pt;                      // unit: 0.1mm
-} traval_config_t;
+} travel_config_t;
 
 typedef struct __attribute__((__packed__)) {
     uint8_t mode:2;                         // 2 bits, basic mode
@@ -98,7 +98,7 @@ typedef struct __attribute__((__packed__)) {
     uint8_t shallow_deact:6;                // unit: 0.1mm
     uint8_t deep_act:6;                     // unit: 0.1mm
     uint8_t deep_deact:6;                   // unit: 0.1mm
-} okmc_traval_config_t;
+} okmc_travel_config_t;
 // size  = 3 bytes
 
 typedef struct
@@ -111,7 +111,7 @@ typedef struct
 // size  = 2 bytes
 
 typedef struct __attribute__((__packed__)) {
-    okmc_traval_config_t travel;             // 3
+    okmc_travel_config_t travel;             // 3
     uint16_t keycode[4];                     // 2*4
     okmc_action_t action[4];                 // 2*4
 } okmc_config_t;

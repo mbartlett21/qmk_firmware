@@ -29,7 +29,7 @@ typedef enum {
     EVT_SLEEP,
     EVT_HID_SET_PROTOCOL,
     EVT_HID_INDICATOR,
-    EVT_CONECTION_INTERVAL,
+    EVT_CONNECTION_INTERVAL,
 } event_type_t;
 
 typedef struct {
@@ -39,7 +39,7 @@ typedef struct {
         uint8_t hostIndex; /* Parameters to connection event from EVT_DISCOVERABLE to EVT_DISCONECTED */
         uint8_t led;       /* Parameters to EVT_HID_INDICATOR event */
         uint8_t protocol;  /* Parameters to EVT_HID_SET_PROTOCOL event */
-        uint8_t interval;  /* Parameters to EVT_CONECTION_INTERVAL event */
+        uint8_t interval;  /* Parameters to EVT_CONNECTION_INTERVAL event */
     } params;
     uint8_t data;
 } wireless_event_t;

@@ -47,7 +47,7 @@ static uint8_t r, g, b;
 extern indicator_config_t indicator_config;
 extern backlight_state_t  original_backlight_state;
 
-void bat_level_animiation_start(uint8_t percentage) {
+void bat_level_animation_start(uint8_t percentage) {
     /* Turn on backlight mode for indicator */
     indicator_enable();
 
@@ -61,15 +61,15 @@ void bat_level_animiation_start(uint8_t percentage) {
 #endif
 }
 
-void bat_level_animiation_stop(void) {
+void bat_level_animation_stop(void) {
     animation_state = BAT_LVL_ANI_NONE;
 }
 
-bool bat_level_animiation_actived(void) {
+bool bat_level_animation_actived(void) {
     return animation_state;
 }
 
-void bat_level_animiation_indicate(void) {
+void bat_level_animation_indicate(void) {
 #ifdef LED_MATRIX_ENABLE
     uint8_t  bat_lvl_led_list[10] = BAT_LEVEL_LED_LIST;
 
@@ -97,7 +97,7 @@ void bat_level_animiation_indicate(void) {
 #endif
 }
 
-void bat_level_animiation_update(void) {
+void bat_level_animation_update(void) {
     switch (animation_state) {
         case BAT_LVL_ANI_GROWING:
             if (cur_percentage < bat_percentage)
@@ -138,9 +138,9 @@ void bat_level_animiation_update(void) {
     bat_lvl_ani_timer_buffer = timer_read32();
 }
 
-void bat_level_animiation_task(void) {
+void bat_level_animation_task(void) {
     if (animation_state && sync_timer_elapsed32(bat_lvl_ani_timer_buffer) > time_interval) {
-        bat_level_animiation_update();
+        bat_level_animation_update();
     }
 }
 

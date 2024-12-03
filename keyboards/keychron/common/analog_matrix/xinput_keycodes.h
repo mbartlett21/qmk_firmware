@@ -52,7 +52,7 @@
 #define XB_LB   BTN(4)
 #define XB_RB   BTN(5)
 #define XB_VIEW BTN(6)
-#define XB_MEMU BTN(7)
+#define XB_MENU BTN(7)
 #define XB_L3   BTN(8)
 #define XB_R3   BTN(9)
 #define XB_UP   BTN(10)

@@ -26,7 +26,7 @@
 #    include "lkbt51.h"
 #    include "indicator.h"
 #endif
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #    include "analog_matrix.h"
 #endif
 #include "config.h"
@@ -48,7 +48,7 @@
 #    define P2P4G_CELAR_MASK P2P4G_CLEAR_PAIRING_TYPE_C
 #endif
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #ifndef J_KEY_ROW
 #define J_KEY_ROW   3
 #endif
@@ -84,7 +84,7 @@ enum {
     KEY_PRESS_BL_KEY1        = 0x01 << 3,
     KEY_PRESS_BL_KEY2        = 0x01 << 4,
     KEY_PRESS_FACTORY_RESET  = KEY_PRESS_FN | KEY_PRESS_J | KEY_PRESS_Z,
-    KEY_PRESS_BACKLIGTH_TEST = KEY_PRESS_FN | KEY_PRESS_BL_KEY1 | KEY_PRESS_BL_KEY2,
+    KEY_PRESS_BACKLIGHT_TEST = KEY_PRESS_FN | KEY_PRESS_BL_KEY1 | KEY_PRESS_BL_KEY2,
 };
 
 enum {
@@ -133,7 +133,7 @@ static inline void factory_timer_check(void) {
             clear_keyboard(); // Avoid key being pressed after NKRO state changed
             layer_state_t default_layer_tmp = default_layer_state;
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
             eeconfig_disable();
             analog_matrix_eeconfig_init();
 #endif
@@ -153,7 +153,7 @@ static inline void factory_timer_check(void) {
 #ifdef LK_WIRELESS_ENABLE
             lkbt51_factory_reset(P2P4G_CELAR_MASK);
 #endif
-        } else if (factory_reset_state == KEY_PRESS_BACKLIGTH_TEST) {
+        } else if (factory_reset_state == KEY_PRESS_BACKLIGHT_TEST) {
 #ifdef LED_MATRIX_ENABLE
             if (!led_matrix_is_enabled()) led_matrix_enable();
 #endif
@@ -277,7 +277,7 @@ bool process_record_factory_test(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 void factory_reset_check(void) {
     extern matrix_row_t virtual_matrix[MATRIX_ROWS];
 
@@ -349,7 +349,7 @@ bool factory_reset_indicating(void) {
 bool factory_test_task(void) {
     if (factory_reset_timer) factory_timer_check();
     if (factory_reset_ind_timer) factory_reset_ind_timer_check();
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
     factory_reset_check();
 #endif
     return true;
@@ -407,7 +407,7 @@ void factory_test_rx(uint8_t *data, uint8_t length) {
 #ifdef LK_WIRELESS_ENABLE
             case FACTORY_TEST_CMD_INT_PIN:
                 switch (data[2]) {
-                    /* Enalbe/disable test */
+                    /* Enable/disable test */
                     case 0xA1:
                         lkbt51_int_pin_test(data[3]);
                         break;
@@ -440,10 +440,10 @@ void factory_test_rx(uint8_t *data, uint8_t length) {
                 if (data[2] < 79) lkbt51_radio_test(data[2]);
                 break;
 
-#    ifdef WERELESS_PRESSURE_TEST
+#    ifdef WIRELESS_PRESSURE_TEST
             case 0x70:
                 switch (data[2]) {
-                    /* Enalbe/disable test */
+                    /* Enable/disable test */
                     case 0xB1:
                         SEND_STRING("abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890abcdefghijklmnopqrstuvwxyz1234567890\n");
                         break;

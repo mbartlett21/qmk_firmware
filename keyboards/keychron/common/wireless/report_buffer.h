@@ -19,13 +19,13 @@
 #include "report.h"
 
 /* Default report interval value */
-#ifndef DEFAULT_BLE_REPORT_INVERVAL_MS
-#    define DEFAULT_BLE_REPORT_INVERVAL_MS 3
+#ifndef DEFAULT_BLE_REPORT_INTERVAL_MS
+#    define DEFAULT_BLE_REPORT_INTERVAL_MS 3
 #endif
 
 /* Default report interval value */
-#ifndef DEFAULT_2P4G_REPORT_INVERVAL_MS
-#    define DEFAULT_2P4G_REPORT_INVERVAL_MS 1
+#ifndef DEFAULT_2P4G_REPORT_INTERVAL_MS
+#    define DEFAULT_2P4G_REPORT_INTERVAL_MS 1
 #endif
 
 /* Default report interval value */
@@ -54,8 +54,8 @@ bool    report_buffer_enqueue(report_buffer_t *report);
 bool    report_buffer_dequeue(report_buffer_t *report);
 bool    report_buffer_is_empty(void);
 void    report_buffer_update_timer(void);
-bool    report_buffer_next_inverval(void);
-void    report_buffer_set_inverval(uint8_t interval);
+bool    report_buffer_next_interval(void);
+void    report_buffer_set_interval(uint8_t interval);
 uint8_t report_buffer_get_retry(void);
 void    report_buffer_set_retry(uint8_t times);
 void    report_buffer_task(void);

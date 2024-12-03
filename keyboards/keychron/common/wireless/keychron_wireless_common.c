@@ -65,7 +65,7 @@ bool process_record_keychron_wireless(uint16_t keycode, keyrecord_t *record) {
 #if (defined(LED_MATRIX_ENABLE) || defined(RGB_MATRIX_ENABLE)) && defined(BAT_LEVEL_LED_LIST)
         case BAT_LVL:
             if ((get_transport() & TRANSPORT_WIRELESS) && !usb_power_connected()) {
-                bat_level_animiation_start(battery_get_percentage());
+                bat_level_animation_start(battery_get_percentage());
             }
             break;
 #endif
@@ -90,7 +90,7 @@ void lkbt51_param_init(void) {
                             .reconnect_timeout      = 5,
                             .report_rate            = 90,
                             .vendor_id_source       = 1,
-                            .verndor_id             = 0x3434, // Must be 0x3434
+                            .vendor_id              = 0x3434, // Must be 0x3434
                             .product_id             = PRODUCT_ID};
     // clang-format on
     lkbt51_set_param(&param);

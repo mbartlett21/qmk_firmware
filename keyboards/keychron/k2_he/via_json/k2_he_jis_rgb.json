@@ -70,7 +70,7 @@
     {"name": "Left Cmd", "title": "Left Command", "shortName": "LCmd"},
     {"name": "Right Cmd", "title": "Right Command", "shortName": "RCmd"},
     {"name": "Misson Control", "title": "Misson Control in Mac", "shortName": "MCtl"},
-    {"name": "Lanuch Pad", "title": "Lanuch Pad in Windows", "shortName": "LPad"},
+    {"name": "Launch Pad", "title": "Launch Pad in Windows", "shortName": "LPad"},
     {"name": "Task View", "title": "Task View in Windows", "shortName": "Task"},
     {"name": "File Explorer", "title": "File Explorer in Windows", "shortName": "File"},
     {"name": "Screen shot", "title": "Screenshot in macOS", "shortName": "SShot"},

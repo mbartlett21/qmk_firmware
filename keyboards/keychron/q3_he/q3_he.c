@@ -30,7 +30,7 @@
 #    include "analog.h"
 #endif
 #include "eeprom_he.h"
-#ifdef ANANLOG_MATRIX
+#ifdef ANALOG_MATRIX
 #    include "analog_matrix.h"
 #endif
 

@@ -18,7 +18,7 @@
 
 #include "xinput_keycodes.h"
 
-uint8_t profile_gobal_mode[PROFILE_COUNT] = {
+uint8_t profile_global_mode[PROFILE_COUNT] = {
     AKM_REGULAR,
     AKM_RAPID,
     AKM_RAPID,
@@ -44,7 +44,7 @@ const uint16_t PROGMEM default_profiles[PROFILE_COUNT][MATRIX_ROWS][MATRIX_COLS]
 
     [2] = LAYOUT_ansi_82(
         0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,
-        XB_VIEW, 0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       XB_MEMU,
+        XB_VIEW, 0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       XB_MENU,
         0,       0,       LS_UP,   XB_LB,   0,       0,       XB_RB,   RS_UP,   0,       0,       0,       XB_Y,    0,       0,       0,
         0,       LS_LEFT, LS_DOWN, LS_RGHT, 0,       0,       RS_LEFT, RS_DOWN, RS_RGHT, 0,       XB_X,    XB_B,             0,       XB_XBOX,
         XB_L3,            0,       0,       0,       0,       0,       0,       0,       0,       0,       XB_A,    XB_R3,   XB_UP,

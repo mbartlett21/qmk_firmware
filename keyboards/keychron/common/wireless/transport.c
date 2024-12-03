@@ -193,10 +193,10 @@ transport_t get_transport(void) {
 }
 
 #if (REINIT_LED_DRIVER)
-/* Changing transport may cause bronw-out reset of led driver
- * withoug MCU reset, which lead backlight to not work,
- * reinit the led driver workgound this issue */
-static void reinit_led_drvier(void) {
+/* Changing transport may cause brown-out reset of led driver
+ * without MCU reset, which lead backlight to not work,
+ * reinit the led driver works around this issue */
+static void reinit_led_driver(void) {
     /* Wait circuit to discharge for a while */
     systime_t start = chVTGetSystemTime();
     while (chTimeI2MS(chVTTimeElapsedSinceX(start)) < 100) {
@@ -216,7 +216,7 @@ void transport_changed(transport_t new_transport) {
     indicator_init();
 
 #if (REINIT_LED_DRIVER)
-    reinit_led_drvier();
+    reinit_led_driver();
 #endif
 
 #if defined(RGB_MATRIX_ENABLE) && defined(RGB_MATRIX_TIMEOUT)
