@@ -44,14 +44,14 @@ static uint8_t travel_to_joystick_axis(uint8_t axis, uint8_t travel) {
     (void)axis;
 
     uint8_t axis_value = 0;
-    float   t          = travel / 6;
-    if (t > curve[3].x) {
+    float   t          = travel / TRAVEL_SCALE;
+    if (t >= curve[3].x) {
         axis_value = curve[3].y;
-    } else if (t > curve[2].x) {
+    } else if (t >= curve[2].x) {
         axis_value = curve[2].y + slope[2] * (t - curve[2].x);
-    } else if (t > curve[1].x) {
+    } else if (t >= curve[1].x) {
         axis_value = curve[1].y + slope[1] * (t - curve[1].x);
-    } else if (t > curve[0].x) {
+    } else if (t >= curve[0].x) {
         axis_value = curve[0].y + slope[0] * (t - curve[0].x);
     }
 
