@@ -32,19 +32,19 @@ enum {
 
 enum {
     GC_X_AXIS_LEFT = 0,
-    GC_X_AXIS_RIGHT,
-    GC_Y_AXIS_DOWN,
-    GC_Y_AXIS_UP,
-    GC_Z_AXIS_N,
-    GC_Z_AXIS_P,
-    GC_RX_AXIS_LEFT,
-    GC_RX_AXIS_RIGHT,
-    GC_RY_AXIS_DOWN,
-    GC_RY_AXIS_UP,
-    GC_RZ_AXIS_N,
-    GC_RZ_AXIS_P,
-    GC_MAX,
-    GC_BUTTON_0,    // 13
+    GC_X_AXIS_RIGHT, // 1
+    GC_Y_AXIS_DOWN,  // 2
+    GC_Y_AXIS_UP,    // 3
+    GC_Z_AXIS_N,     // 4
+    GC_Z_AXIS_P,     // 5
+    GC_RX_AXIS_LEFT, // 6
+    GC_RX_AXIS_RIGHT,// 7
+    GC_RY_AXIS_DOWN, // 8
+    GC_RY_AXIS_UP,   // 9
+    GC_RZ_AXIS_N,    // 10
+    GC_RZ_AXIS_P,    // 11
+    GC_MAX,          // 12
+    GC_BUTTON_0,     // 13
     GC_BUTTON_31 = GC_BUTTON_0+31,
     GC_BUTTON_MAX,
 };
