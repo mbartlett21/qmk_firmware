@@ -172,29 +172,32 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
                 }
             }
         }
-    } else if (iswatching_key_lock()) {
-        // Do caps lock array of letters
-        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
-            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
-                uint8_t index = g_led_config.matrix_co[row][col];
-                uint16_t kc = keymap_key_to_keycode(layer, (keypos_t){col,row});
+    } else {
+        if (iswatching_key_lock()) {
+            // Do all the keys that can be locked down
+            for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+                for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                    uint8_t index = g_led_config.matrix_co[row][col];
+                    uint16_t kc = keymap_key_to_keycode(layer, (keypos_t){col,row});
 
-                if (index >= led_min && index < led_max && index != NO_LED &&
-                        IS_ANY(kc)) {
-                    rgb_matrix_set_color(index, RGB_RED);
+                    if (index >= led_min && index < led_max && index != NO_LED &&
+                            IS_ANY(kc)) {
+                        rgb_matrix_set_color(index, RGB_RED);
+                    }
                 }
             }
         }
-    } else if (host_keyboard_led_state().caps_lock) {
-        // Do caps lock array of letters
-        for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
-            for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
-                uint8_t index = g_led_config.matrix_co[row][col];
-                uint16_t kc = 0;
+        if (host_keyboard_led_state().caps_lock) {
+            // Do caps lock array of letters
+            for (uint8_t row = 0; row < MATRIX_ROWS; ++row) {
+                for (uint8_t col = 0; col < MATRIX_COLS; ++col) {
+                    uint8_t index = g_led_config.matrix_co[row][col];
+                    uint16_t kc = 0;
 
-                if (index >= led_min && index < led_max && index != NO_LED &&
-                        (kc = keymap_key_to_keycode(layer, (keypos_t){col,row})) >= KC_A && kc <= KC_Z) {
-                    rgb_matrix_set_color(index, RGB_WHITE);
+                    if (index >= led_min && index < led_max && index != NO_LED &&
+                            (kc = keymap_key_to_keycode(layer, (keypos_t){col,row})) >= KC_A && kc <= KC_Z) {
+                        rgb_matrix_set_color(index, RGB_WHITE);
+                    }
                 }
             }
         }
