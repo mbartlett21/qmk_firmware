@@ -137,3 +137,11 @@ bool process_key_lock(uint16_t *keycode, keyrecord_t *record) {
         return !(IS_STANDARD_KEYCODE(translated_keycode) && KEY_STATE(translated_keycode));
     }
 }
+
+bool iswatching_key_lock(void) {
+    return watching;
+}
+
+bool isactive_key_lock(void) {
+    return key_state[0] != 0 && key_state[1] != 0 && key_state[2] != 0 && key_state[3] != 0;
+}
