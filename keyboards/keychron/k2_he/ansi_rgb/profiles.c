@@ -47,6 +47,6 @@ const uint16_t PROGMEM default_profiles[PROFILE_COUNT][MATRIX_ROWS][MATRIX_COLS]
         XB_VIEW, 0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,       0,                XB_MEMU,
         0,       0,       LS_UP,   XB_LB,   0,       0,       XB_RB,   RS_UP,   0,       0,       0,       XB_Y,    0,       0,                0,
         0,       LS_LEFT, LS_DOWN, LS_RGHT, 0,       0,       RS_LEFT, RS_DOWN, RS_RGHT, 0,       XB_X,    XB_B,             0,                XB_XBOX,
-        XB_L3,            0,       0,       0,       0,       0,       0,       0,       0,       0,       XB_A,             XB_R3,   XB_UP,   0,
+        XB_L3,            0,AX(GC_RZ_AXIS_N),0,      0,       0,       0,AX(GC_RZ_AXIS_P),0,      0,       XB_A,             XB_R3,   XB_UP,   0,
         XB_LT,   0,       0,                                  0,                                  0,       0,       XB_RT,   XB_LEFT, XB_DOWN, XB_RGHT)
 };
