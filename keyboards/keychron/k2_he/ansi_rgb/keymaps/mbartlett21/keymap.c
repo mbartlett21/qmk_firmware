@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [WIN_FN] = LAYOUT_ansi_84(
 /*   Esc       F1        F2        F3        F4        F5        F6        F7        F8        F9        F10       F11       F12       PrtSc     Delete    Lights  */
-     _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  _______,  RGB_TOG,
+     _______,  KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,  KC_VOLU,  _______,  KC_INSERT,RGB_TOG,
 /*   `         1         2         3         4         5         6         7         8         9         0         -         =         Bksp                PgUp    */
      _______,  BT_HST1,  BT_HST2,  BT_HST3,  P2P4G,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
 /*   Tab       Q         W         E         R         T         Y         U         I         O         P         [         ]         \                   PgDn    */
